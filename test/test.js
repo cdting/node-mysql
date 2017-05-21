@@ -14,7 +14,7 @@ const conn = require('../mysql/mysql_connection');
 conn.vagueQuery({
     tableName: 'node_user',
     attrID: 'name',
-    attrName: '刘'
+    attrName: 'tin'
 }, (data) => {
     console.log(data);
 })
