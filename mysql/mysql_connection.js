@@ -84,10 +84,33 @@ module.exports.deleteWhere = (parsObj, fn) => {
     });
 };
 
+/**
+ * 模糊查询
+ * parsObj--参数对象
+ *  tableName--表名
+ *  attrID--条件类型
+ *  attrName--条件值(%value%)
+ */
+module.exports.vagueQuery = (parsObj, fn) => {
+    let callbackData;
+    connection.connect();
+    console.log(parsObj.attrName);
+
+    let conn = connection.query('select * from ?? where ?? like ?', [parsObj.tableName, parsObj.attrID, "%" + parsObj.attrName + "%"], (err, results, fields) => {
+        if (err) throw err;
+        callbackData = results;
+    });
+
+    conn.on('end', () => {
+        fn(callbackData);
+    });
+
+    connection.end();
+};
 
 /**
  * 自定义
- * sql--传入的sql语句
+ * @sql--传入的sql语句
  * pars--sql语句的参数，数组
  * fn--执行后回掉数据
  */
